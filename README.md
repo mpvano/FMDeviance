@@ -15,7 +15,7 @@ This software was only made possible thanks to the excellent work done the Gnu R
 
 Mario Vano AE0GL
 
-![Flow](Images/deviation.pdf)
+![Flow graph](Images/deviation.pdf)
 
 ![APRS](Images/deviation.pdf)
 
