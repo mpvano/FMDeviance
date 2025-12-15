@@ -15,7 +15,6 @@ This software was only made possible thanks to the excellent work done the Gnu R
 
 Mario Vano AE0GL
 
-![Flow](Images/deviation.png)
-
+![Flow graph](Images/deviation.png)
 ![APRS](Images/APRSCapture.png)
 
