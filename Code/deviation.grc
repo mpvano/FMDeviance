@@ -291,7 +291,7 @@ blocks:
     alias: ''
     audio_rate: samp_rate
     comment: ''
-    max_dev: max_deviation * 1000 * (1/float(calibration))
+    max_dev: max_deviation * 1000
     maxoutbuf: '0'
     minoutbuf: '0'
     quad_rate: 32 * samp_rate
@@ -320,6 +320,24 @@ blocks:
     coordinate: [1112, 336.0]
     rotation: 0
     state: true
+- name: blocks_multiply_const_vxx_0
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Calibration point
+    const: calibration
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [592, 168.0]
+    rotation: 180
+    state: enabled
 - name: blocks_multiply_const_vxx_1
   id: blocks_multiply_const_vxx
   parameters:
@@ -949,11 +967,12 @@ blocks:
 connections:
 - [analog_nbfm_rx_0, '0', blocks_multiply_xx_0, '0']
 - [analog_nbfm_rx_0, '0', high_pass_filter_0, '0']
+- [blocks_multiply_const_vxx_0, '0', blocks_selector_0, '1']
+- [blocks_multiply_const_vxx_0, '0', dc_blocker_xx_0, '0']
 - [blocks_multiply_const_vxx_1, '0', audio_sink_0, '0']
 - [blocks_multiply_const_vxx_2, '0', blocks_threshold_ff_0, '0']
+- [blocks_multiply_xx_0, '0', blocks_multiply_const_vxx_0, '0']
 - [blocks_multiply_xx_0, '0', blocks_multiply_const_vxx_1, '0']
-- [blocks_multiply_xx_0, '0', blocks_selector_0, '1']
-- [blocks_multiply_xx_0, '0', dc_blocker_xx_0, '0']
 - [blocks_rms_xx_0, '0', RMS, '0']
 - [blocks_rms_xx_0, '0', qtgui_time_sink_x_1, '1']
 - [blocks_rms_xx_2, '0', blocks_multiply_const_vxx_2, '0']
