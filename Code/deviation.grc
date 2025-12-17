@@ -50,6 +50,18 @@ blocks:
     coordinate: [768, 152.0]
     rotation: 0
     state: enabled
+- name: calibration
+  id: variable
+  parameters:
+    comment: ''
+    value: '1.11'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [160, 80.0]
+    rotation: 0
+    state: enabled
 - name: max_deviation
   id: variable_qtgui_range
   parameters:
@@ -279,7 +291,7 @@ blocks:
     alias: ''
     audio_rate: samp_rate
     comment: ''
-    max_dev: max_deviation * 1000
+    max_dev: max_deviation * 1000 * (1/float(calibration))
     maxoutbuf: '0'
     minoutbuf: '0'
     quad_rate: 32 * samp_rate
