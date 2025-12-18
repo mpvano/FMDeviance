@@ -47,7 +47,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [768, 152.0]
+    coordinate: [776, 152.0]
     rotation: 0
     state: enabled
 - name: calibration
@@ -134,7 +134,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [504, 392.0]
+    coordinate: [552, 432.0]
     rotation: 0
     state: true
 - name: tau_us
@@ -218,7 +218,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [944, 400.0]
+    coordinate: [880, 392.0]
     rotation: 0
     state: true
 - name: RMS
@@ -294,13 +294,13 @@ blocks:
     max_dev: max_deviation * 1000
     maxoutbuf: '0'
     minoutbuf: '0'
-    quad_rate: 32 * samp_rate
+    quad_rate: 8* samp_rate
     tau: tau_us * 1e-6
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [304, 208.0]
+    coordinate: [472, 208.0]
     rotation: 0
     state: true
 - name: audio_sink_0
@@ -335,8 +335,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [592, 168.0]
-    rotation: 180
+    coordinate: [624, 144.0]
+    rotation: 0
     state: enabled
 - name: blocks_multiply_const_vxx_1
   id: blocks_multiply_const_vxx
@@ -353,7 +353,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [936, 336.0]
+    coordinate: [896, 336.0]
     rotation: 0
     state: true
 - name: blocks_multiply_const_vxx_2
@@ -371,7 +371,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [616, 536.0]
+    coordinate: [664, 576.0]
     rotation: 0
     state: true
 - name: blocks_multiply_xx_0
@@ -389,7 +389,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [536, 240.0]
+    coordinate: [688, 328.0]
     rotation: 0
     state: true
 - name: blocks_rms_xx_0
@@ -423,7 +423,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [496, 536.0]
+    coordinate: [544, 576.0]
     rotation: 0
     state: true
 - name: blocks_selector_0
@@ -464,7 +464,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [768, 520.0]
+    coordinate: [816, 560.0]
     rotation: 0
     state: true
 - name: dc_blocker_xx_0
@@ -506,9 +506,33 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [320, 496.0]
+    coordinate: [368, 536.0]
     rotation: 0
     state: true
+- name: low_pass_filter_0
+  id: low_pass_filter
+  parameters:
+    affinity: ''
+    alias: ''
+    beta: '6.76'
+    comment: ''
+    cutoff_freq: '100000'
+    decim: '4'
+    gain: '1'
+    interp: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: 32*samp_rate
+    type: fir_filter_ccf
+    width: '10000'
+    win: window.WIN_HAMMING
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [296, 192.0]
+    rotation: 0
+    state: enabled
 - name: qtgui_time_sink_x_1
   id: qtgui_time_sink_x
   parameters:
@@ -945,7 +969,7 @@ blocks:
     minoutbuf: '0'
     nchan: '1'
     num_mboards: '1'
-    sample_rate: 32 * samp_rate
+    sample_rate: 32* samp_rate
     sync: sync
     time_source0: ''
     time_source1: ''
@@ -981,7 +1005,8 @@ connections:
 - [blocks_threshold_ff_0, '0', blocks_multiply_xx_0, '1']
 - [dc_blocker_xx_0, '0', blocks_selector_0, '0']
 - [high_pass_filter_0, '0', blocks_rms_xx_2, '0']
-- [rtlsdr_source_0, '0', analog_nbfm_rx_0, '0']
+- [low_pass_filter_0, '0', analog_nbfm_rx_0, '0']
+- [rtlsdr_source_0, '0', low_pass_filter_0, '0']
 
 metadata:
   file_format: 1
