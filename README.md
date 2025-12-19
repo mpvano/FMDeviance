@@ -23,7 +23,7 @@ Wayland based systems may output lengthy warnings to standard output that X wind
 
 This may work with other radios that OsmoSDR supports, but I've only tested it with the official RTL-SDR.com version 3 and 4 dongles.
 
-The only problem I've encountered in moving it between different platforms is that the High Pass Filter module may report that it can't find it's windowing options because sometimes they have different suffixes on different platforms. To fix this, open the module and pop up the selector for the windowing option and select the one with the corresponding names. This is easier than it sounds - the names are obvious...
+The only problem I've encountered in moving it between different platforms is that the Low and High Pass Filter modules may report that they can't find the hamming windowing option because sometimes they have different suffixes on different platforms. To fix this, open the module and pop up the selector for the windowing option and reselect the hamming window listed. This is easier than it sounds - the names are obvious...
 
 ### Disclaimers
 
