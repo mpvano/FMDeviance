@@ -19,6 +19,12 @@ If you have a 3 button mouse, the middle button will pop up a menu of scope disp
 
 Wayland based systems may output lengthy warnings to standard output that X windows features used by this popup menu may not be supported in the future. These are annoying, but they may safely be ignored and don't affect operation at this time.
 
+### Calibration
+
+In the upper Left corner of the flow diagram, you will find a variable named "calibration". In theory, the correct setting for this should be 1.0 since all the demodulation is done digitally and should be accurate. If you find that checking against another deviation meter, or Bessel nulls disagrees with this, you can trim the behavior in this variable.
+
+In line with the old adage about a man with two watches, I find myself vaccillating between setting my own calibration to 1.11 and 1.0, depending on which calibration tool I'm currently using. I think I may eventually set 1.04 and try to stop fidgiting with it!
+
 ### Compatibility
 
 This may work with other radios that OsmoSDR supports, but I've only tested it with the official RTL-SDR.com version 3 and 4 dongles.
