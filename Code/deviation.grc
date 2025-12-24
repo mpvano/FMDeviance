@@ -39,7 +39,7 @@ blocks:
     comment: ''
     'false': 'False'
     gui_hint: 2,2
-    label: LPF
+    label: HPF
     'true': 'True'
     type: int
     value: 'False'
@@ -54,7 +54,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '1.11'
+    value: '1.04'
   states:
     bus_sink: false
     bus_source: false
@@ -125,9 +125,9 @@ blocks:
     min_len: '200'
     orient: QtCore.Qt.Horizontal
     rangeType: float
-    start: '-5'
+    start: '-3'
     step: '.05'
-    stop: -.1
+    stop: -.65
     value: '-1'
     widget: dial
   states:
@@ -455,7 +455,7 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    high: squelch+0.1
+    high: squelch+0.2
     init: '0'
     low: squelch
     maxoutbuf: '0'
@@ -500,7 +500,7 @@ blocks:
     minoutbuf: '0'
     samp_rate: samp_rate
     type: fir_filter_fff
-    width: '100'
+    width: '50'
     win: window.WIN_HAMMING
   states:
     bus_sink: false
