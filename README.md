@@ -9,15 +9,19 @@ installed RTL-SDR.com Version 3 or 4 library.
 
 Hovering over the scope display will show the X and Y values at that point.
 
-While hovering over a frozen scope display, the mouse wheel can be used to zoom the Y axis gain up or down. Of course, if you zoom out what you see will not display anything beyond the max_deviation setting.
+While hovering over the scope display, the mouse wheel can be used to zoom the Y axis gain up or down. Of course, if you zoom out what you see will not display much beyond the max_deviation setting.
 
 You can also select a rectangular portion of the display with the left button. When you release the button, the display will zoom to the selection.
 
 Clicking with the right button will restore the original zoom settings.
 
-If you have a 3 button mouse, the middle button will pop up a menu of scope display parameters which can be modified. You can also save the scope display as a jpeg file. The "trigger" submenu allows switching to free running operation or altering the other triggering parameters.
+The oscilloscope display now runs free instead of being triggered. If you have a 3 button mouse, the middle button can pop up a menu of scope display parameters which can be used to modified triggering and other behaviours. You can also save the scope display as a jpeg file.
 
 Wayland based systems may output lengthy warnings to standard output that X windows features used by this popup menu may not be supported in the future. These are annoying, but they may safely be ignored and don't affect operation at this time.
+
+### Tone Generator
+
+A popup box in the lower right corner of the display now allows you to select audio output from either an adjustable sine wave oscillator or from the monitor receiver.
 
 ### Calibration
 
