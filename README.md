@@ -2,7 +2,7 @@
 
 **_A Simple GnuRadio and RTL-SDR Based NBFM Deviation Meter_**
 
-The only prerequisits are that you have a recent version of GnuRadio installed that includes the OsmoSDR support for SDR radios, and that you have a properly 
+The only prerequisites are that you have a recent version of GnuRadio installed that includes the OsmoSDR support for SDR radios, and that you have a properly 
 installed RTL-SDR.com Version 3 or 4 library.
 
 ### Display Controls
@@ -21,7 +21,7 @@ Wayland based systems may output lengthy warnings to standard output that X wind
 
 ### Tone Generator
 
-A popup box in the lower right corner of the display now allows you to select audio output from either an adjustable sine wave oscillator or from the monitor receiver.
+A popup box in the lower right corner of the display now allows you to select audio output from either an adjustable sine wave oscillator or from the monitor receiver. You may need to add a capacitor and/or transformer to your sound card output to get proper input to your transmitter's microphone circuit, as they often have DC bias voltage on them.
 
 ### Calibration
 
