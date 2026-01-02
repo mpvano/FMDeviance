@@ -5,6 +5,16 @@
 The only prerequisites are that you have a recent version of GnuRadio installed that includes the OsmoSDR support for SDR radios, and that you have a properly 
 installed RTL-SDR.com Version 3 or 4 library.
 
+### Known Limitations
+
+The NBFM Demodulator module in Gnu Radio uses a fixed audio output cutoff around 3.5khz. This means that although it can be set to demodulate wideband signals, the measured results are only accurate in this case for low modulating frequencies and limited levels of modulation.
+
+While this provides useful results for monitoring and simple troubleshooting of wideband FM signals, FMDeviance can only produce reliable measurements for Narrow Band FM signals.
+
+The same limitations cause the Squelch circuitry to be unreliable for signals containing significant program content above 3 Khz.
+
+Non of these limitations should interfere with its intended use: Setting deviation of VHF and UHF Amateur Radio transmitting equipment.
+
 ### Display Controls
 
 Hovering over the scope display will show the X and Y values at that point.
