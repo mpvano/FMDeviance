@@ -85,7 +85,7 @@ blocks:
   parameters:
     comment: ''
     gui_hint: 5,0
-    label: ''
+    label: Tone
     min_len: '200'
     orient: QtCore.Qt.Horizontal
     rangeType: float
@@ -106,7 +106,7 @@ blocks:
   parameters:
     comment: ''
     gui_hint: 5,1
-    label: ''
+    label: Tone Level
     min_len: '200'
     orient: QtCore.Qt.Horizontal
     rangeType: float
@@ -126,7 +126,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '1.04'
+    value: '1.0'
   states:
     bus_sink: false
     bus_source: false
@@ -197,10 +197,10 @@ blocks:
     min_len: '200'
     orient: QtCore.Qt.Horizontal
     rangeType: float
-    start: '-3'
-    step: '.05'
-    stop: -.65
-    value: '-1'
+    start: '0'
+    step: '10'
+    stop: '500'
+    value: '200'
     widget: dial
   states:
     bus_sink: false
@@ -454,7 +454,7 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    const: '-1'
+    const: -1 * max_deviation
     maxoutbuf: '0'
     minoutbuf: '0'
     type: float
@@ -547,9 +547,9 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    high: squelch+0.2
+    high: '-0.5'
     init: '0'
-    low: squelch
+    low: '-1'
     maxoutbuf: '0'
     minoutbuf: '0'
   states:
@@ -565,8 +565,8 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    length: '32'
-    long_form: 'True'
+    length: '512'
+    long_form: 'False'
     maxoutbuf: '0'
     minoutbuf: '0'
     type: ff
@@ -584,9 +584,9 @@ blocks:
     alias: ''
     beta: '6.76'
     comment: ''
-    cutoff_freq: '3000'
+    cutoff_freq: '3500'
     decim: '1'
-    gain: '500'
+    gain: squelch
     interp: '1'
     maxoutbuf: '0'
     minoutbuf: '0'
