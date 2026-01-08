@@ -22,7 +22,7 @@ options:
     run_options: prompt
     sizing_mode: fixed
     thread_safe_setters: ''
-    title: deviation
+    title: FMDeviance 2.0
     window_size: 1024,768
   states:
     bus_sink: false
@@ -33,12 +33,48 @@ options:
     state: enabled
 
 blocks:
+- name: AF_DECIMATE
+  id: variable
+  parameters:
+    comment: ''
+    value: '8'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [432, 8.0]
+    rotation: 0
+    state: true
+- name: CALIBRATION
+  id: variable
+  parameters:
+    comment: ''
+    value: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [328, 80.0]
+    rotation: 0
+    state: true
+- name: NBFM_TAU
+  id: variable
+  parameters:
+    comment: ''
+    value: 750e-6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [240, 80.0]
+    rotation: 0
+    state: enabled
 - name: OutputSelect
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: 5,2
-    label: '"Output"'
+    gui_hint: 4,2
+    label: '"                          Output"'
     label0: Radio
     label1: Tone
     label2: ''
@@ -46,21 +82,21 @@ blocks:
     label4: ''
     labels: '[]'
     num_opts: '2'
-    option0: '1'
-    option1: '0'
+    option0: '0'
+    option1: '1'
     option2: '2'
     option3: '3'
     option4: '4'
     options: '[0, 1, 2]'
-    orient: Qt.QVBoxLayout
+    orient: Qt.QHBoxLayout
     type: real
-    value: '1'
+    value: '0'
     widget: combo_box
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1264, 324.0]
+    coordinate: [1200, 580.0]
     rotation: 0
     state: true
 - name: REMOVE_DC
@@ -68,8 +104,8 @@ blocks:
   parameters:
     comment: ''
     'false': 'False'
-    gui_hint: 2,2
-    label: HPF
+    gui_hint: 0,2
+    label: '"Remove DC"'
     'true': 'True'
     type: int
     value: 'False'
@@ -77,15 +113,51 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [816, 128.0]
+    coordinate: [656, 640.0]
+    rotation: 0
+    state: enabled
+- name: RF_DECIMATE
+  id: variable
+  parameters:
+    comment: ''
+    value: '4'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [328, 8.0]
+    rotation: 0
+    state: true
+- name: RF_SCALE
+  id: variable
+  parameters:
+    comment: ''
+    value: '32'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [248, 8.0]
+    rotation: 0
+    state: true
+- name: TAU
+  id: variable
+  parameters:
+    comment: ''
+    value: 75e-6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [168, 80.0]
     rotation: 0
     state: enabled
 - name: Tone
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: 5,0
-    label: Tone
+    gui_hint: 4,0
+    label: '"Oscillator frequency  in Hz"'
     min_len: '200'
     orient: QtCore.Qt.Horizontal
     rangeType: float
@@ -98,16 +170,16 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [896, 384.0]
+    coordinate: [784, 624.0]
     rotation: 0
     state: true
 - name: ToneLevel
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: 5,1
-    label: Tone Level
-    min_len: '200'
+    gui_hint: 4,1
+    label: '"     Relative Output  Level"'
+    min_len: '100'
     orient: QtCore.Qt.Horizontal
     rangeType: float
     start: '0'
@@ -119,61 +191,70 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1000, 384.0]
+    coordinate: [936, 624.0]
     rotation: 0
     state: true
-- name: calibration
-  id: variable
+- name: baseband
+  id: variable_qtgui_range
   parameters:
     comment: ''
-    value: '1.0'
+    gui_hint: 3,1
+    label: '"    Bandwidth in  Hz"'
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '100'
+    step: '500'
+    stop: '60000'
+    value: '5000'
+    widget: counter
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [160, 64.0]
+    coordinate: [408, 624.0]
     rotation: 0
     state: enabled
 - name: max_deviation
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: 0,0
-    label: max_deviation
+    gui_hint: 3,0
+    label: '"  deviation in KHz"'
     min_len: '200'
     orient: QtCore.Qt.Horizontal
     rangeType: float
     start: '0.5'
     step: '0.1'
     stop: '100'
-    value: '5.0'
+    value: '5'
     widget: counter
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [288, 8]
+    coordinate: [272, 624.0]
     rotation: 0
     state: true
 - name: rfgain
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: 3,0
-    label: '"                        rfgain"'
+    gui_hint: 5,0
+    label: '"rfgain"'
     min_len: '200'
     orient: QtCore.Qt.Horizontal
     rangeType: float
     start: '0'
-    step: '1'
+    step: '.5'
     stop: '50'
-    value: '25'
-    widget: dial
+    value: '40'
+    widget: slider
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [152, 400.0]
+    coordinate: [168, 624.0]
     rotation: 0
     state: true
 - name: samp_rate
@@ -192,166 +273,168 @@ blocks:
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: 3,1
-    label: '"                    squelch"'
+    gui_hint: 5,1
+    label: '" squelch"'
     min_len: '200'
     orient: QtCore.Qt.Horizontal
     rangeType: float
     start: '0'
-    step: '10'
-    stop: '500'
-    value: '200'
-    widget: dial
+    step: '.1'
+    stop: '10'
+    value: '6'
+    widget: slider
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [552, 296.0]
-    rotation: 0
-    state: true
-- name: tau_us
-  id: variable_qtgui_range
-  parameters:
-    comment: ''
-    gui_hint: 2,1
-    label: '"             Tau (us)"'
-    min_len: '200'
-    orient: QtCore.Qt.Horizontal
-    rangeType: float
-    start: '1'
-    step: '1'
-    stop: '150'
-    value: '1'
-    widget: counter
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [408, 8.0]
+    coordinate: [560, 624.0]
     rotation: 0
     state: true
 - name: tuning
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: 0,1
-    label: FREQUENCY
+    gui_hint: 0,0
+    label: '"    FREQUENCY"'
     min_len: '200'
     orient: QtCore.Qt.Horizontal
     rangeType: float
     start: '30000000'
     step: '100'
-    stop: '500000000'
+    stop: '1300000000'
     value: '144390000'
     widget: counter
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [16, 400.0]
+    coordinate: [32, 624.0]
     rotation: 0
     state: enabled
+- name: tuning
+  id: qtgui_msgdigitalnumbercontrol
+  parameters:
+    ThousandsSeparator: ','
+    affinity: ''
+    alias: ''
+    comment: ''
+    gui_hint: 0,0
+    lbl: ''
+    maxFreqHz: 1700e6
+    maxoutbuf: '0'
+    minFreqHz: 30e6
+    minoutbuf: '0'
+    outputmsgname: freq
+    readOnly: 'False'
+    relBackgroundColor: black
+    relFontColor: white
+    value: 144.39e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [56, 520.0]
+    rotation: 0
+    state: disabled
 - name: volume
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: 3,2
-    label: '"                      volume"'
+    gui_hint: 5,2
+    label: '" volume"'
     min_len: '200'
     orient: QtCore.Qt.Horizontal
     rangeType: float
     start: '0'
-    step: '.05'
+    step: '.01'
     stop: '1'
     value: '0.5'
-    widget: dial
+    widget: slider
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1128, 368.0]
+    coordinate: [1080, 624.0]
     rotation: 0
     state: true
-- name: RMS
-  id: qtgui_number_sink
+- name: whichTau
+  id: variable_qtgui_chooser
   parameters:
-    affinity: ''
-    alias: ''
-    autoscale: 'False'
-    avg: '0.7'
-    color1: ("black", "black")
-    color10: ("black", "black")
-    color2: ("black", "black")
-    color3: ("black", "black")
-    color4: ("black", "black")
-    color5: ("black", "black")
-    color6: ("black", "black")
-    color7: ("black", "black")
-    color8: ("black", "black")
-    color9: ("black", "black")
     comment: ''
-    factor1: '1'
-    factor10: '1'
-    factor2: '1'
-    factor3: '1'
-    factor4: '1'
-    factor5: '1'
-    factor6: '1'
-    factor7: '1'
-    factor8: '1'
-    factor9: '1'
-    graph_type: qtgui.NUM_GRAPH_HORIZ
-    gui_hint: 2,0,1,1
-    label1: '""'
-    label10: ''
-    label2: ''
+    gui_hint: 3,2
+    label: '"                        Tau"'
+    label0: NONE
+    label1: 'NBFM: 750u'
+    label2: WBFM:75u
     label3: ''
     label4: ''
-    label5: ''
-    label6: ''
-    label7: ''
-    label8: ''
-    label9: ''
-    max: '1'
-    min: '0'
-    name: '" "'
-    nconnections: '1'
-    type: float
-    unit1: '"   RMS"'
-    unit10: ''
-    unit2: ''
-    unit3: ''
-    unit4: ''
-    unit5: ''
-    unit6: ''
-    unit7: ''
-    unit8: ''
-    unit9: ''
-    update_time: '0.10'
+    labels: '[]'
+    num_opts: '3'
+    option0: '2'
+    option1: '1'
+    option2: '0'
+    option3: '3'
+    option4: '4'
+    options: '[0, 1, 2]'
+    orient: Qt.QHBoxLayout
+    type: int
+    value: '2'
+    widget: combo_box
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1232, 136.0]
-    rotation: 0
+    coordinate: [1336, 548.0]
+    rotation: 180
     state: enabled
-- name: analog_nbfm_rx_0
-  id: analog_nbfm_rx
+- name: analog_fm_deemph_0
+  id: analog_fm_deemph
   parameters:
     affinity: ''
     alias: ''
-    audio_rate: samp_rate
     comment: ''
-    max_dev: max_deviation * 1000
     maxoutbuf: '0'
     minoutbuf: '0'
-    quad_rate: 8* samp_rate
-    tau: tau_us * 1e-6
+    samp_rate: samp_rate
+    tau: NBFM_TAU
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [464, 192.0]
+    coordinate: [1072, 96.0]
+    rotation: 0
+    state: enabled
+- name: analog_fm_deemph_1
+  id: analog_fm_deemph
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    tau: TAU
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1072, 24.0]
+    rotation: 0
+    state: true
+- name: analog_quadrature_demod_cf_0
+  id: analog_quadrature_demod_cf
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    gain: 0.63662 * CALIBRATION
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [488, 312.0]
     rotation: 0
     state: true
 - name: analog_sig_source_x_0
@@ -359,8 +442,8 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    amp: ToneLevel if (OutputSelect == 0) else 0
-    comment: ''
+    amp: ToneLevel if (OutputSelect == 1) else 0
+    comment: Test Oscillator
     freq: Tone
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -374,7 +457,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [944, 240.0]
+    coordinate: [1056, 280.0]
     rotation: 0
     state: true
 - name: audio_sink_0
@@ -391,7 +474,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1264, 264.0]
+    coordinate: [1360, 304.0]
     rotation: 0
     state: true
 - name: blocks_add_xx_0
@@ -409,7 +492,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1160, 256.0]
+    coordinate: [1264, 296.0]
     rotation: 0
     state: true
 - name: blocks_multiply_const_vxx_0
@@ -417,8 +500,8 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    comment: Calibration point
-    const: calibration
+    comment: Scale Display
+    const: max_deviation
     maxoutbuf: '0'
     minoutbuf: '0'
     type: float
@@ -427,7 +510,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [640, 104.0]
+    coordinate: [1056, 448.0]
     rotation: 0
     state: enabled
 - name: blocks_multiply_const_vxx_1
@@ -435,8 +518,8 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    comment: ''
-    const: (volume * .1) * OutputSelect
+    comment: Volume Control
+    const: (volume * (OutputSelect==0)) / 10
     maxoutbuf: '0'
     minoutbuf: '0'
     type: float
@@ -445,8 +528,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1016, 128.0]
-    rotation: 0
+    coordinate: [1288, 208.0]
+    rotation: 180
     state: true
 - name: blocks_multiply_const_vxx_2
   id: blocks_multiply_const_vxx
@@ -454,7 +537,7 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    const: -1 * max_deviation
+    const: '-1'
     maxoutbuf: '0'
     minoutbuf: '0'
     type: float
@@ -463,15 +546,15 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [608, 432.0]
+    coordinate: [520, 536.0]
     rotation: 0
-    state: true
+    state: enabled
 - name: blocks_multiply_xx_0
   id: blocks_multiply_xx
   parameters:
     affinity: ''
     alias: ''
-    comment: ''
+    comment: Squelch Gate
     maxoutbuf: '0'
     minoutbuf: '0'
     num_inputs: '2'
@@ -481,7 +564,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [704, 224.0]
+    coordinate: [848, 320.0]
     rotation: 0
     state: true
 - name: blocks_rms_xx_0
@@ -489,7 +572,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    alpha: '0.0005'
+    alpha: '0.0001'
     comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -498,7 +581,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1016, 72.0]
+    coordinate: [1192, 504.0]
     rotation: 0
     state: enabled
 - name: blocks_rms_xx_2
@@ -506,7 +589,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    alpha: '0.0005'
+    alpha: '0.005'
     comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -515,7 +598,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [480, 432.0]
+    coordinate: [392, 536.0]
     rotation: 0
     state: true
 - name: blocks_selector_0
@@ -525,7 +608,7 @@ blocks:
     alias: ''
     comment: ''
     enabled: 'True'
-    input_index: not(REMOVE_DC)
+    input_index: not REMOVE_DC
     maxoutbuf: '0'
     minoutbuf: '0'
     num_inputs: '2'
@@ -538,9 +621,32 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [816, 8.0]
+    coordinate: [840, 120.0]
     rotation: 0
-    state: enabled
+    state: true
+- name: blocks_selector_1
+  id: blocks_selector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    enabled: 'True'
+    input_index: whichTau
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '3'
+    num_outputs: '1'
+    output_index: '0'
+    showports: 'True'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1256, 88.0]
+    rotation: 0
+    state: true
 - name: blocks_threshold_ff_0
   id: blocks_threshold_ff
   parameters:
@@ -556,7 +662,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [760, 416.0]
+    coordinate: [672, 520.0]
     rotation: 0
     state: true
 - name: dc_blocker_xx_0
@@ -564,7 +670,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    comment: ''
+    comment: High Pass
     length: '512'
     long_form: 'False'
     maxoutbuf: '0'
@@ -574,7 +680,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [640, 16.0]
+    coordinate: [680, 128.0]
     rotation: 0
     state: enabled
 - name: high_pass_filter_0
@@ -583,23 +689,23 @@ blocks:
     affinity: ''
     alias: ''
     beta: '6.76'
-    comment: ''
-    cutoff_freq: '3500'
-    decim: '1'
-    gain: squelch
+    comment: Squelch Filter
+    cutoff_freq: max_deviation * 1000
+    decim: '8'
+    gain: squelch - (max_deviation/30)
     interp: '1'
     maxoutbuf: '0'
     minoutbuf: '0'
-    samp_rate: samp_rate
+    samp_rate: samp_rate * AF_DECIMATE
     type: fir_filter_fff
-    width: '50'
+    width: '2000'
     win: window.WIN_HAMMING
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [312, 392.0]
-    rotation: 0
+    coordinate: [488, 376.0]
+    rotation: 180
     state: true
 - name: low_pass_filter_0
   id: low_pass_filter
@@ -607,24 +713,77 @@ blocks:
     affinity: ''
     alias: ''
     beta: '6.76'
-    comment: ''
-    cutoff_freq: '100000'
-    decim: '4'
+    comment: Sets RF Bandwidth
+    cutoff_freq: 2 *  (max_deviation * 1000) + baseband + 2000
+    decim: RF_DECIMATE
     gain: '1'
     interp: '1'
     maxoutbuf: '0'
     minoutbuf: '0'
-    samp_rate: 32*samp_rate
+    samp_rate: RF_SCALE * samp_rate
     type: fir_filter_ccf
-    width: '10000'
+    width: '2000'
     win: window.WIN_HAMMING
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [288, 176.0]
+    coordinate: [312, 272.0]
     rotation: 0
     state: enabled
+- name: low_pass_filter_1
+  id: low_pass_filter
+  parameters:
+    affinity: ''
+    alias: ''
+    beta: '6.76'
+    comment: ''
+    cutoff_freq: baseband
+    decim: AF_DECIMATE
+    gain: 100.0/max_deviation
+    interp: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate * AF_DECIMATE
+    type: fir_filter_fff
+    width: '2000'
+    win: window.WIN_HAMMING
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [672, 272.0]
+    rotation: 0
+    state: true
+- name: qtgui_sink_x_0
+  id: qtgui_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    bw: samp_rate *RF_SCALE
+    comment: Debug probe
+    fc: '0'
+    fftsize: '1024'
+    gui_hint: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: '"Debug probe"'
+    plotconst: 'True'
+    plotfreq: 'True'
+    plottime: 'True'
+    plotwaterfall: 'True'
+    rate: '10'
+    showports: 'False'
+    showrf: 'False'
+    type: complex
+    wintype: window.WIN_BLACKMAN_hARRIS
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [312, 152.0]
+    rotation: 0
+    state: disabled
 - name: qtgui_time_sink_x_1
   id: qtgui_time_sink_x
   parameters:
@@ -642,10 +801,10 @@ blocks:
     alpha9: '1.0'
     autoscale: 'False'
     axislabels: 'True'
-    color1: dark blue
+    color1: green
     color10: dark blue
-    color2: dark green
-    color3: green
+    color2: red
+    color3: dark red
     color4: black
     color5: cyan
     color6: magenta
@@ -660,7 +819,7 @@ blocks:
     label1: p-p
     label10: Signal 10
     label2: RMS
-    label3: Signal 3
+    label3: Debug
     label4: Signal 4
     label5: Signal 5
     label6: Signal 6
@@ -678,7 +837,7 @@ blocks:
     marker7: '-1'
     marker8: '-1'
     marker9: '-1'
-    name: FM Deviation
+    name: ''
     nconnections: '2'
     size: '768'
     srate: samp_rate
@@ -711,15 +870,15 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    ylabel: Max_deviation
-    ymax: '1'
-    ymin: '-1'
+    ylabel: peak deviation
+    ymax: max_deviation
+    ymin: -max_deviation
     yunit: '""'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1232, 32.0]
+    coordinate: [1328, 448.0]
     rotation: 0
     state: true
 - name: rtlsdr_source_0
@@ -1061,7 +1220,7 @@ blocks:
     minoutbuf: '0'
     nchan: '1'
     num_mboards: '1'
-    sample_rate: 32* samp_rate
+    sample_rate: RF_SCALE * samp_rate
     sync: sync
     time_source0: ''
     time_source1: ''
@@ -1076,31 +1235,37 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [40, 132.0]
+    coordinate: [64, 228.0]
     rotation: 0
     state: true
 
 connections:
-- [analog_nbfm_rx_0, '0', blocks_multiply_xx_0, '0']
-- [analog_nbfm_rx_0, '0', high_pass_filter_0, '0']
+- [analog_fm_deemph_0, '0', blocks_selector_1, '1']
+- [analog_fm_deemph_1, '0', blocks_selector_1, '0']
+- [analog_quadrature_demod_cf_0, '0', high_pass_filter_0, '0']
+- [analog_quadrature_demod_cf_0, '0', low_pass_filter_1, '0']
 - [analog_sig_source_x_0, '0', blocks_add_xx_0, '1']
 - [blocks_add_xx_0, '0', audio_sink_0, '0']
-- [blocks_multiply_const_vxx_0, '0', blocks_selector_0, '1']
-- [blocks_multiply_const_vxx_0, '0', dc_blocker_xx_0, '0']
+- [blocks_multiply_const_vxx_0, '0', blocks_rms_xx_0, '0']
+- [blocks_multiply_const_vxx_0, '0', qtgui_time_sink_x_1, '0']
 - [blocks_multiply_const_vxx_1, '0', blocks_add_xx_0, '0']
 - [blocks_multiply_const_vxx_2, '0', blocks_threshold_ff_0, '0']
-- [blocks_multiply_xx_0, '0', blocks_multiply_const_vxx_0, '0']
-- [blocks_rms_xx_0, '0', RMS, '0']
+- [blocks_multiply_xx_0, '0', blocks_selector_0, '1']
+- [blocks_multiply_xx_0, '0', dc_blocker_xx_0, '0']
 - [blocks_rms_xx_0, '0', qtgui_time_sink_x_1, '1']
 - [blocks_rms_xx_2, '0', blocks_multiply_const_vxx_2, '0']
-- [blocks_selector_0, '0', blocks_multiply_const_vxx_1, '0']
-- [blocks_selector_0, '0', blocks_rms_xx_0, '0']
-- [blocks_selector_0, '0', qtgui_time_sink_x_1, '0']
+- [blocks_selector_0, '0', analog_fm_deemph_0, '0']
+- [blocks_selector_0, '0', analog_fm_deemph_1, '0']
+- [blocks_selector_0, '0', blocks_multiply_const_vxx_0, '0']
+- [blocks_selector_0, '0', blocks_selector_1, '2']
+- [blocks_selector_1, '0', blocks_multiply_const_vxx_1, '0']
 - [blocks_threshold_ff_0, '0', blocks_multiply_xx_0, '1']
 - [dc_blocker_xx_0, '0', blocks_selector_0, '0']
 - [high_pass_filter_0, '0', blocks_rms_xx_2, '0']
-- [low_pass_filter_0, '0', analog_nbfm_rx_0, '0']
+- [low_pass_filter_0, '0', analog_quadrature_demod_cf_0, '0']
+- [low_pass_filter_1, '0', blocks_multiply_xx_0, '0']
 - [rtlsdr_source_0, '0', low_pass_filter_0, '0']
+- [rtlsdr_source_0, '0', qtgui_sink_x_0, '0']
 
 metadata:
   file_format: 1
