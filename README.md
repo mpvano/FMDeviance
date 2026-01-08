@@ -41,7 +41,7 @@ Wireless microphones and broadcast measurements require a much wider setting. Th
 
 If you want to measure the total deviation of these, you must use a high enough bandwidth to pass all of them; if you are only interested in observing the behavior of the basic analog channel, you can use a lower value to filter them out.
 
-For most US FM broadcasts, the maximum deviation should be set to 75 KHz. You can set the bandwidth to 16 KHz to see just the basic Mono signal. To see the full composite signal including pilot tone, L-R, SCA and Digital subchannels, you will need to use a bandwidth setting of at least 60 KHz.
+For most US FM broadcasts, the maximum deviation should be set to 75 KHz. You can set the bandwidth to 16 KHz to see just the basic Mono signal. To see the full composite signal including pilot tone, L-R, SCA and Digital subchannels, you will need to use a bandwidth setting of at least 60 KHz. Note that 60khz bandwidth operation is marginal, however, with the present filter implementation.
 
 ### Tau
 
