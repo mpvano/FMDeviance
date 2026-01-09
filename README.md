@@ -7,6 +7,10 @@ This is a complete rewrite of my original deviation meter to eliminate many earl
 The only prerequisites are that you have a recent version of GnuRadio installed that includes the OsmoSDR support for SDR radios, and that you have a properly 
 installed library for you RTL-SDR.com version 3 or 4 radio. On some platforms you need to install the OsmoSDR support as a separate step.
 
+### Known Limitations
+
+Although it allows you to set them, the present version does not properly handle audio bandwidths greater than 20 KHz.
+
 
 ### Tuning Control
 
@@ -41,7 +45,7 @@ Wireless microphones and broadcast measurements require a much wider setting. Th
 
 If you want to measure the total deviation of these, you must use a high enough bandwidth to pass all of them; if you are only interested in observing the behavior of the basic analog channel, you can use a lower value to filter them out.
 
-For most US FM broadcasts, the maximum deviation should be set to 75 KHz. You can set the bandwidth to 16 KHz to see just the basic Mono signal. To see the full composite signal including pilot tone, L-R, SCA and Digital subchannels, you will need to use a bandwidth setting of at least 60 KHz. Note that 60khz bandwidth operation is marginal, however, with the present filter implementation.
+For most US FM broadcasts, the maximum deviation should be set to 75 KHz. You can set the bandwidth to 16 KHz to see just the basic Mono signal. To see the full composite signal including pilot tone, L-R, SCA and Digital subchannels, you will need to use a bandwidth setting of at least 60 KHz. Note that with bandwidth > 20 KHz, operation is incorrect with the present filter implementation.
 
 ### Tau
 
