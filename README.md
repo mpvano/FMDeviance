@@ -1,4 +1,4 @@
-## FMDeviance 2.0: 14-Jan-2026
+## FMDeviance 2.1: 14-Jan-2026
 
 **_A Simple GnuRadio and RTL-SDR Based NBFM Deviation Meter_**
 
