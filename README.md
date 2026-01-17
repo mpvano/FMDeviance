@@ -1,4 +1,4 @@
-## FMDeviance 2.0: 8-Jan-2026
+## FMDeviance 2.0: 14-Jan-2026
 
 **_A Simple GnuRadio and RTL-SDR Based NBFM Deviation Meter_**
 
@@ -9,7 +9,17 @@ installed library for you RTL-SDR.com version 3 or 4 radio. On some platforms yo
 
 ### Known Limitations
 
-Although it allows you to set them, the present version does not properly handle audio bandwidths greater than 20 KHz.
+Previous versions allowed you to set audio bandwidths greater than 20 KHz but didn't handle them properly. An option has been provided to allow bandwidths up to 43 KHz has now been added, but to handle these bandwidths, the sampling rate is increased and CPU usage will rise significantly.
+
+The wide bandwidth functionality may not work well on Pi 4 or Pi 400 computers. As this capability is not required for most uses, it was made optional.
+
+Note also that limitations in my test equipment make it impossible to confirm that operation beyond 30Khz audio bandwidth is completely correct. I'm seeing some signs that the filters may be aliasing, but I cannot tell for certain. Use this capability with caution.
+
+To enable 96000 Hz sampling, the command line to the generated flow graph:
+
+	"python3 deviation.py --sampleRate 96000"
+	
+can be used, or it can be made the new default by changing the value in the "Parameter Block" in the upper left hand corner of the flow diagram to "96000" instead of "48000". These are the only two values allowed.
 
 
 ### Tuning Control
@@ -45,7 +55,9 @@ Wireless microphones and broadcast measurements require a much wider setting. Th
 
 If you want to measure the total deviation of these, you must use a high enough bandwidth to pass all of them; if you are only interested in observing the behavior of the basic analog channel, you can use a lower value to filter them out.
 
-For most US FM broadcasts, the maximum deviation should be set to 75 KHz. You can set the bandwidth to 16 KHz to see just the basic Mono signal. To see the full composite signal including pilot tone, L-R, SCA and Digital subchannels, you will need to use a bandwidth setting of at least 60 KHz. Note that with bandwidth > 20 KHz, operation is incorrect with the present filter implementation.
+For most US FM broadcasts, the maximum deviation should be set to 75 KHz. You can set the bandwidth to 16 KHz to see just the basic Mono signal. To see the full composite signal including pilot tone, L-R, SCA and Digital subchannels, you might need to use a bandwidth setting well over 40 KHz.
+
+Note that this program now limits setting the bandwidth to slightly less than 1/2 the audio sampling rate in use. That defaults to 48000 but can be increased to 96000 samples per second as described above.
 
 ### Tau
 
@@ -74,20 +86,32 @@ In the upper Left corner of the flow diagram, you will find a variable named "CA
 
 ### Accuracy
 
-Within the limits of the Low Pass filtering, the measured single sine wave deviation should be accurate within 3% of the measured value. Note, however that for wideband measurements, the scope display has some limitations above 12 Khz and some aliasing may be seen. The bandwidth filters specify the frequency at which the signal is significantly reduced, so the response typically begins to drop at about 90% of the set value.
+Within the limits of the Low Pass filtering, the measured single sine wave deviation should be accurate within 3% of the measured value. Note, however that for wideband measurements, the scope display has some limitations above 12 Khz and some aliasing may be seen.
 
-The RMS value displayed is for use as a reference only.
+The bandwidth filters specify the frequency at which their response is significantly reduced, so the response typically begins to drop at about 90% of the set value. This is the standard way to describe bandwidth.
+
+The RMS trace displayed is for use as a loudness reference only and is highly waveform dependent.
 
 ### Debugging Display
 
-There's a disabled "QT GUI sink" block included in the flow diagram used for debugging. For troubleshooting, it can be connected to inspect the signal anywhere. It takes a lot of screen space and CPU. When connected to the output of the RTL-SDR source, it has sufficient resolution to observe Bessel Nulls for calibration if appropriately zoomed. The first two nulls are at modulation indices of 2.4048 and 5.5200.
+There's a disabled "QT GUI sink" block included in the flow diagram used for debugging. For troubleshooting, it can be connected to inspect the signal anywhere. It takes a lot of screen space and CPU.
+
+When connected to the output of the RTL-SDR source, it has sufficient resolution to observe Bessel Nulls for calibration if appropriately zoomed. The first two carrier nulls are useful because they occur at modulation indices of 2.4048 and 5.5200.
 
 
 ### Compatibility
 
-This may work with other radios that have Gnu Radio support, but I've only tested it with the official RTL-SDR.com version 3 and 4 dongles.
+The Raspberry Pi operating system's audio system is sometimes highly unstable, particularly for a few months after the release of a new upgrade. This program requires that ALSA audio be operating properly, in particular that the ALSA default output device be working. 
 
-I've only encountered one problem in moving FMDeviance between different platforms and versions of Gnu Radio. The various Low and High Pass Filter modules may report that they can't find the hamming windowing option because sometimes they have different suffixes for the option names in the popups. To fix this, open each complaining module and pop up the selector for the windowing option, then reselect the hamming window listed. This is easier than it sounds - the correct names are obvious variations of the incorrect ones.
+You can test if your ALSA system and it's default output device are working properly using the built in linux tool called "speaker-test". Typing this command from a terminal window should report if the device is working right and begin producing sound. If it does not, you should correct this problem before expecting Gnu Radio (or many other programs that produce sound) to work properly.
+
+A workaround for some OS bugs might be to open the Audio Sink block in deviance.grc and explicitly select your ALSA device by putting its name (e.g. "plughw:CARD=vc4hdmi1,DEV=0") into it, rather than leaving it blank to selects the default ALSA device. You can find your device name by running "aplay -L".
+
+FMDeviance may work with other radios that have Gnu Radio support, but I've only tested it with the official RTL-SDR.com version 3 and 4 dongles.
+
+I've only seen one problem in moving FMDeviance between different platforms and versions of Gnu Radio. The various Low and High Pass Filter modules may report that they can't find DSP windowing options like "hamming" because over time the suffixes for the windowing option names in the popups have changed.
+
+To fix this, open each complaining module and pop up the selector for the windowing option, then reselect the windowing option. This is easier than it sounds - the correct names are obvious variations of the incorrect ones.
 
 
 ### Disclaimers
